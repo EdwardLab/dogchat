@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+    </head>
+    <body>
+        <h1>User login</h1>
+        <form action="{% url 'users:login' %}" method="POST">
+            {% csrf_token %}
+            {% if err_msg %}
+            <strong style="color: red;">{{ err_msg }}</strong>
+            <br>
+            {% endif %}
+            Username:
+            <input type="text" name="username">
+            <br>
+            Password:
+            <input type=password" name="password">
+            <br>
+            <input type="submit" value="submit">
+        </form>
+    </body>
+</html>
