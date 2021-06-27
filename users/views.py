@@ -52,3 +52,10 @@ def login(request):
         
     else:
         return render(request, 'users/login.html', {})
+
+def logout(request):
+    if request.session.get('is_login'):
+        request.session.flush()
+        return HttpResponse('ok')
+    else:
+        return HttpResponse('You are not logged in')
