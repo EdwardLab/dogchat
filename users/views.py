@@ -25,6 +25,8 @@ def register(request):
         return render(request, 'users/register.html', {})
 
 def login(request):
+    if request.session.get('is_login'):
+        return HttpResponse('You have already logged in')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -39,9 +41,14 @@ def login(request):
                 'err_msg':'User does not exist',
             })
         if check_password(password, user.password):
+            request.session['is_login'] = True
+            request.session['uid'] = user.pk
+            request.session['username'] = user.username
+            request.session['password'] = user.password
             return HttpResponse('ok')
         return render(request, 'users/login.html', {
             'err_msg':'wrong user name or password',
         })
+        
     else:
         return render(request, 'users/login.html', {})
