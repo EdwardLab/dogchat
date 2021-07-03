@@ -1,24 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Dogchat - Register</title>
+        <link href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <style>
+            .operation {
+                text-align: center;
+            }
+
+            form small {
+                display: block;
+                text-align: right;
+                color: gray;
+            }
+
+            form label {
+                margin: 0 auto;
+            }
+            
+            form span {
+                color: red;
+            }
+
+            form {
+                padding: 5px;
+            }
+        </style>
     </head>
     <body>
-        <h1>User registration</h1>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Dogchat</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+                    <a class="nav-link active" href="{% url 'users:register' %}">Register</a>
+                </div>
+            </div>
+        </nav>
+        <h1 style="text-align: center; margin: 0 auto;">User register</h1>
         <form action="{% url 'users:register' %}" method="POST">
             {% csrf_token %}
-            {% if err_msg %}
-            <strong style="color: red;">{{ err_msg }}</strong>
-            <br>
-            {% endif %}
-            Username:
-            <input type="text" name="username">
-            <br>
-            Password:
-            <input type=password" name="password">
-            <br>
-            <input type="submit" value="submit">
+            <p style="color: red;" class="validpwd" hidden>Password input is inconsistent</p>
+            <div class="alert alert-danger alert-dismissible fade show err_alert" role="alert" {% if not err_msg %} hidden {% endif %}>
+                <strong id="err_msg">{% if err_msg %}{{ err_msg }}{% endif %}}</strong><br>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <label for="username"><span> * </span>Username</label><br>
+            <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" required><br>
+            <label for="email"><span> * </span>Email</label><br>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required><br>
+            <label for="password"><span> * </span>Password</label><br>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required><br>
+            <label for="password"><span> * </span>Confirm password</label><br>
+            <input type="password" name="confirm" class="form-control" id="confirm" placeholder="Enter password again" required><br>
+            <div class="operation">
+                <button type="submit" class="form-control btn btn-primary col-6">Register</button>
+            </div>
+            <small>Already have an account? <a href="{% url 'users:login' %}">Log in</a> now!</small>
         </form>
+        <script>
+            $(document).ready(function(){
+                $('form').submit(function(){
+                    if($('#confirm').val() === $('#password').val()){
+                        return true;
+                    }
+                    $('.err_alert').removeAttr('hidden');
+                    $('#err_msg').text('Password input is inconsistent');
+                    return false;
+            }}))
+        </script>
     </body>
 </html>
