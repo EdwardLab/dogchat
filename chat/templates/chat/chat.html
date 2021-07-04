@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatLogs</title>
+    <title>Dogchat - ChatLogs</title>
 </head>
 <body>
     <ol>
     {% for i in logs %}
-    <li>{{i.src}} --&gt; {{i.dst}} {{i.content}}</li>
+    {% if src == i.src %} <li>你给{{ dst }}发了: {{ i.content }}</li> {% endif %}
+    {% if src == i.dst %} <li>{{ dst }}给你发了: {{ i.content }}</li> {% endif %}
     {% endfor %}
     </ol>
 </body>

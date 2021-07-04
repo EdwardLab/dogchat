@@ -5,5 +5,6 @@ from . import views
 
 app_name = 'chat'
 urlpatterns = [
-    path('<int:src_id>/<int:dst_id>/', views.showChatLog, name='showlog')
+    path('<str:dst_name>/', views.show_logs, name='showlog'),
+    path('send/<str:dst_name>/<str:msg>/', views.send_msg, name='sendmsg')
 ]
