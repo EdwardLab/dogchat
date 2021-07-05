@@ -41,17 +41,22 @@
                 </div>
             </div>
         </nav>
-        <div style="text-align: center; margin: 0 auto;" class="alert alert-primary" role="alert"><h2>Welcome To DogChat!</h2></div>
-        <p style="text-align: center; margin: 0 auto;" >DogChat, a lightweight, fast chat platform.</p>
-        <div class="alert alert-info text-align: center; margin: 0 auto;" role="alert">No account? Sign up now!</div>
-            </div>
+        
+        <div class="jumbotron">
+  <h1 class="display-4">Welcome to Dogchat</h1>
+  <p class="lead">DogChat, a lightweight, fast chat platform.</p>
+  <hr class="my-4">
+  <p>With DogChat, you can chat quickly and easily. Just one account and enjoy chatting.</p>
+  <a class="btn btn-primary btn-lg" href="{% url 'users:register' %}" role="button">Register Now!</a>
+</div>
+                </div>
             
          
-                <p><button class="form-control btn btn-default col-12"> <a href="{% url 'users:register' %}">Register</a></button>
-        <div class="alert alert-info text-align: center; margin: 0 auto;" role="alert">Already have an account? Log in now!</div>
+     <div class="alert alert-info text-align: center; margin: 0 auto;" role="alert">Already have an account? Log in now!</div>
                     
                 <button class="form-control btn btn-default col-12"> <a href="{% url 'users:login' %}">Login</a></button>
-         
+          <div class="p-3 mb-2 bg-success text-white">Powered By:DogChat</div>
+          <p class="font-weight-lighter">DogChat, an open source, free, lightweight chat server and client</p>
             </div>
         </form>
     </body>
