@@ -1,3 +1,5 @@
+import secrets
+
 from django.db import models
 from django.contrib.auth.hashers import make_password
 
@@ -6,6 +8,7 @@ from django.contrib.auth.hashers import make_password
 class User(models.Model):
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=256)
+    token = models.CharField(max_length=32)
 
     def save(self, *args, **kwargs):
         self.password = make_password(self.password, None, 'pbkdf2_sha256')
