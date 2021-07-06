@@ -36,7 +36,7 @@ Line 79 of dogchat/setting.py:
 You need to configure a standard mysql server, and fill in the server information in dogchat/setting.py (like the configuration format above), NAME fill in your database name, USER is your database user name, HOST is your database IP address (if you build locally, it is usually 127.0.0.1), PORT is your database port (usually 3306), and PASSWORD is your database password. If you are buying a cloud host, the cloud host provider usually provides this information. If you don't know this information, you can consult. If you want to use your own equipment to build a mysql database, then you can go to Google chat for more information on the mysql database
 ## Running QuickServer
 1.Configure environment variables (python 3.x defaults to python variables)
-2. Go to the dogchat root folder, open cmd or terminal, and enter the code ```python manage.py runserver 0.0.0.0:8000,You can also change to another port.```
+2. Go to the dogchat root folder, open cmd or terminal, and enter the code ```python manage.py runserver 0.0.0.0:8000```You can also change to another port.
 
 
 
