@@ -8,18 +8,18 @@ Whether you're a Windows, Linux, or other system server, Python and Django suppo
 ### Installation QuickServer method
 #### Ubuntu or Debian (Series) Linux
 1.Open Server Terminal  
-2.Enter ```apt update && apt install python3 git mysql-server && pip install django && cd ~ && mkdir dogchat && cd dogchat && git clone https://github.com/xingyujie/dogchat.git```
+2.Enter ```apt update && apt install python3 git mysql-server && pip install django && cd ~ && mkdir dogchat && cd dogchat && git clone https://github.com/xingyujie/dogchat.git```  
 3.Configuring the MySQL server:  
 DogChat needs Mysql server support, we can go to dogchat/setting.py to configure the default database.  
 #### Other Linux, like centos
-1.Install python3(like yum),mysql,pip,django(pip) and Clone Code
+1.Install python3(like yum),mysql,pip,django(pip) and Clone Code  
 2.Configuring the MySQL server:  
 DogChat needs Mysql server support, we can go to dogchat/setting.py to configure the default database.  
 #### Windows
-1.Download and install the Python standard exe package, and check pip for custom installation.
-2.Clone the repository source code and place it in any folder.
-3. Build Mysql Server, configure the database according to the database configuration prompt below.
-4. Check out the Running QuickServer chapter Quick Boot Server
+1.Download and install the Python standard exe package, and check pip for custom installation.  
+2.Clone the repository source code and place it in any folder.  
+3. Build Mysql Server, configure the database according to the database configuration prompt below.  
+4. Check out the Running QuickServer chapter Quick Boot Server  
 Line 79 of dogchat/setting.py:  
 ```DATABASES = {
     'default': {
