@@ -20,6 +20,7 @@ DogChat needs Mysql server support, we can go to dogchat/setting.py to configure
 2.Clone the repository source code and place it in any folder.  
 3. Build Mysql Server, configure the database according to the database configuration prompt below.  
 4. Check out the Running QuickServer chapter Quick Boot Server  
+##### Regardless of the system, you need to configure the MySQL server using the following tips
 Line 79 of dogchat/setting.py:  
 ```DATABASES = {
     'default': {
