@@ -24,7 +24,9 @@ Line 79 of dogchat/setting.py:
         'PORT': '3306',
         'PASSWORD': '@dogchat?963_default!321_?password@!'
     }
-}```
+}
+```
+## Tips for database deploy
 You need to configure a standard mysql server, and fill in the server information in dogchat/setting.py (like the configuration format above), NAME fill in your database name, USER is your database user name, HOST is your database IP address (if you build locally, it is usually 127.0.0.1), PORT is your database port (usually 3306), and PASSWORD is your database password. If you are buying a cloud host, the cloud host provider usually provides this information. If you don't know this information, you can consult. If you want to use your own equipment to build a mysql database, then you can go to Google chat for more information on the mysql database
 
 
