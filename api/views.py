@@ -89,3 +89,47 @@ def send(request):
         'msg': 'ok',
         'data': {}
     })
+
+@csrf_exempt
+def get_log(request):
+    if request.method != 'GET':
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Wrong request method',
+            'data': {}
+        })
+    try:
+        token = request.GET['token']
+        dst_name= request.GET['dst_name']
+        id= request.GET['id']
+    except KeyError:
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Missing parameters',
+            'data':{}
+            })
+    try:
+        src = User.objects.get(token=token)
+    except User.DoesNotExist:
+        return JsonResponse({
+            'code': 403,
+            'msg': 'Incorrect token',
+            'data': {}
+        })
+    try:
+        dst = User.objects.get(username=dst_name)
+    except User.DoesNotExist:
+        return JsonResponse({
+            'code': 404,
+            'msg': 'User does not exist',
+            'data': {}
+        })
+    log1 = ChatLog.objects.filter(src=src, dst=dst, id__gt=id)
+    log2 = ChatLog.objects.filter(src=dst, dst=src, id__gt=id)
+    logs = log1 | log2
+    log_list = [ {'id':i.pk, 'src':i.src.username, 'dst':i.dst.username, 'msg':i.content} for i in logs ]
+    return JsonResponse({
+        'code': 200,
+        'msg': 'ok',
+        'data': {'logs': log_list}
+    })
