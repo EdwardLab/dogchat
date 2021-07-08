@@ -15,7 +15,7 @@ def show_logs(request, dst_name):
     logs1 = ChatLog.objects.filter(src=src, dst=dst)
     logs2 = ChatLog.objects.filter(src=dst, dst=src)
     logs = (logs1 | logs2).order_by('id')
-    return render(request, 'chat/chat.html', {'logs':logs, 'src':src, 'dst':dst})
+    return render(request, 'chat/chat.html', {'src':src, 'dst':dst, 'token':src.token})
 
 def send_msg(request, dst_name, msg):
     if not request.session.get('username'):

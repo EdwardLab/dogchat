@@ -59,18 +59,41 @@
     <div>
         <h1 class="dstName">{{ dst }}</h1>
     </div>
-    {% for i in logs %}
-    {% if src == i.src %} <div class="src"><p>{{ i.content }}</p></div> {% endif %}
-    {% if src == i.dst %} <div class="dst"><p>{{ i.content }}</p></div> {% endif %}
-    {% endfor %}
+    <div class="content">
+    </div>
     <form>
         <div style="margin-bottom: 5px;">
             <textarea class="userinput form-control" name="msg"></textarea>
         </div>
         <div style="text-align: right;">
-            <input type="submit" class="btn btn-primary" value="send">
+            <input id="submit" type="button" class="btn btn-primary" value="send">
         </div>
     </form>
     </div>
+    <script>
+        var ws=new WebSocket("ws://127.0.0.1:8000/ws/chat/");
+        ws.onopen = function(){
+            ws.send('{"token":"{{ token }}", "dst_name":"{{ dst }}"}');
+        }
+        ws.onmessage = function(e){
+            data = JSON.parse(e.data);
+            if(data.src === "{{ src }}"){
+                $('.content').append('<div class="src"><p>'+data.msg+'</p></div>')
+            }else{
+                $('.content').append('<div class="dst"><p>'+data.msg+'</p></div>')
+            }
+        }
+    </script>
+    <script>
+        $('#submit').click(function(){
+            $.post('http://127.0.0.1:8000/api/send/',
+                {
+                    'token': '{{ token }}',
+                    'dst_name': '{{ dst }}',
+                    'msg': $('.userinput').val()
+                }
+            );
+        })
+    </script>
 </body>
 </html>
