@@ -1,7 +1,7 @@
 import secrets
 
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, reverse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
 
 from .models import User
@@ -22,13 +22,13 @@ def register(request):
             })
         user = User(username=username, password=password, token=secrets.token_hex(16))
         user.save()
-        return HttpResponse('ok')
+        return HttpResponseRedirect(reverse('users:login'))
     else:
         return render(request, 'users/register.html', {})
 
 def login(request):
     if request.session.get('is_login'):
-        return HttpResponse('You have already logged in')
+        return HttpResponseRedirect(reverse('homepage:homepage'))
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -47,7 +47,7 @@ def login(request):
             request.session['uid'] = user.pk
             request.session['username'] = user.username
             request.session['password'] = user.password
-            return HttpResponse('ok')
+            return HttpResponseRedirect(reverse('homepage:homepage'))
         return render(request, 'users/login.html', {
             'err_msg':'wrong user name or password',
         })
@@ -58,6 +58,6 @@ def login(request):
 def logout(request):
     if request.session.get('is_login'):
         request.session.flush()
-        return HttpResponse('ok')
+        return HttpResponseRedirect(reverse('users:login'))
     else:
-        return HttpResponse('You are not logged in')
+        return HttpResponseRedirect(reverse('users:login'))
