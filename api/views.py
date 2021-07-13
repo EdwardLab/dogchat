@@ -179,3 +179,149 @@ def getfriends(request):
             'msg': 'ok',
             'data': {'friends':lists}
         })
+
+@csrf_exempt
+def getfriends(request):
+    if request.method != 'GET':
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Wrong request method',
+            'data': {}
+        })
+    try:
+        token = request.GET['token']
+    except KeyError:
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Missing parameters',
+            'data':{}
+            })
+    try:
+        src = User.objects.get(token=token)
+    except User.DoesNotExist:
+        return JsonResponse({
+            'code': 403,
+            'msg': 'Incorrect token',
+            'data': {}
+        })
+    lists = [ i.dst.username for i in Relation.objects.filter(src=src, status='friend') ]
+    return JsonResponse({
+            'code': 200,
+            'msg': 'ok',
+            'data': {'friends':lists}
+        })
+
+@csrf_exempt
+def getrequests(request):
+    if request.method != 'GET':
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Wrong request method',
+            'data': {}
+        })
+    try:
+        token = request.GET['token']
+    except KeyError:
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Missing parameters',
+            'data':{}
+            })
+    try:
+        src = User.objects.get(token=token)
+    except User.DoesNotExist:
+        return JsonResponse({
+            'code': 403,
+            'msg': 'Incorrect token',
+            'data': {}
+        })
+    lists = [ i for i in Relation.objects.filter(dst=src, status='request') ]
+    return JsonResponse({
+            'code': 200,
+            'msg': 'ok',
+            'data': {
+                'requests': [ {'id': i.pk, 'src': i.src.username} for i in lists]
+            }
+        })
+
+@csrf_exempt
+def allowrequest(request):
+    if request.method != 'POST':
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Wrong request method',
+            'data': {}
+        })
+    try:
+        token = request.POST['token']
+        id = request.POST['id']
+    except KeyError:
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Missing parameters',
+            'data':{}
+            })
+    try:
+        src = User.objects.get(token=token)
+    except User.DoesNotExist:
+        return JsonResponse({
+            'code': 403,
+            'msg': 'Incorrect token',
+            'data': {}
+        })
+    try:
+        request = Relation.objects.get(pk=id)
+    except Relation.DoesNotExist:
+        return JsonResponse({
+            'code': 404,
+            'msg': 'The Requests does not exist',
+            'data': {}
+        })
+    request.status = 'friend'
+    Relation(src=src, dst=request.src, status='friend').save()
+    request.save()
+    return JsonResponse({
+            'code': 200,
+            'msg': 'ok',
+            'data': {}
+        })
+
+@csrf_exempt
+def denyrequest(request):
+    if request.method != 'POST':
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Wrong request method',
+            'data': {}
+        })
+    try:
+        token = request.POST['token']
+        id = request.POST['id']
+    except KeyError:
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Missing parameters',
+            'data':{}
+            })
+    try:
+        src = User.objects.get(token=token)
+    except User.DoesNotExist:
+        return JsonResponse({
+            'code': 403,
+            'msg': 'Incorrect token',
+            'data': {}
+        })
+    try:
+        request = Relation.objects.get(pk=id)
+    except Relation.DoesNotExist:
+        return JsonResponse({
+            'code': 404,
+            'msg': 'The Requests does not exist',
+            'data': {}
+        })
+    request.delete()
+    return JsonResponse({
+            'code': 200,
+            'msg': 'ok',
+            'data': {}
+        })

@@ -12,19 +12,54 @@
             color: black;
             text-decoration: none;
         }
+        
+        button {
+            float: right;
+            margin: 0 1px;
+        }
     </style>
 </head>
 <body>
     <div class="card">
+        {% if requests %}
         <div class="card-header">
-          Friends List
+            Friend Request
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="requests list-group list-group-flush">
+            {% for request in requests %}
+            <li class="list-group-item">
+                {{ request.src.username }}
+                <button type="button" class="deny btn btn-danger" onclick="denyreq('{{ request.pk }}', this);">deny</button>
+                <button type="button" class="allow btn btn-success" onclick="allowreq('{{ request.pk }}', this);">allow</button>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="card-header">
+            Friends List
+        </div>
+        <ul class="friends list-group list-group-flush">
             {% for friend in friends %}
-            <li class="list-group-item"><a href="{% url 'chat:showlog' friend %}">{{ friend }}</a></li>
+            <li class="list-group-item"><a href="{% url 'chat:showlog' friend %}">{{ friend.dst.username }}</a></li>
             {% endfor %}
         </ul>
     </div>
-    
+    <script>
+        function reload(){
+            if($('.requests').children().length === 0){
+                window.location.reload()
+            }
+        }
+        function allowreq(id, e){
+            $.post('{% url "api:allowrequest" %}', {token:'{{ token }}', id:id});
+            $(e).parent().remove();
+            setTimeout(reload, 1000);
+        }
+        function denyreq(id, e){
+            $.post('{% url "api:denyrequest" %}', {token:'{{ token }}', id:id});
+            $(e).parent().remove();
+            setTimeout(reload, 1000);
+        }
+    </script>
 </body>
 </html>

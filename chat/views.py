@@ -18,5 +18,6 @@ def get_friends_list(request):
     if not request.session.get('username'):
         return HttpResponseRedirect(reverse('users:login'))
     src = get_object_or_404(User, username=request.session['username'])
-    lists = [ i.dst.username for i in Relation.objects.filter(src=src) ]
-    return render(request, 'chat/friends.html', {'friends':lists})
+    friend_list = Relation.objects.filter(src=src, status='friend')
+    requests_list = Relation.objects.filter(dst=src, status='request')
+    return render(request, 'chat/friends.html', {'token':src.token, 'friends':friend_list, 'requests':requests_list})
