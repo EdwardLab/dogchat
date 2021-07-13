@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from users.models import User
-from .models import ChatLog
+from .models import ChatLog, Relation
 
 # Create your views here.
 
@@ -13,3 +13,10 @@ def show_logs(request, dst_name):
     src = get_object_or_404(User, username=request.session['username'])
     dst = get_object_or_404(User, username=dst_name)
     return render(request, 'chat/chat.html', {'src':src, 'dst':dst, 'token':src.token})
+
+def get_friends_list(request):
+    if not request.session.get('username'):
+        return HttpResponseRedirect(reverse('users:login'))
+    src = get_object_or_404(User, username=request.session['username'])
+    lists = [ i.dst.username for i in Relation.objects.filter(src=src) ]
+    return render(request, 'chat/friends.html', {'friends':lists})
