@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password
 
 from users.models import User
-from chat.models import ChatLog
+from chat.models import ChatLog, Relation
 
 # Create your views here.
 
@@ -83,13 +83,20 @@ def send(request):
             'msg': 'User does not exist',
             'data': {}
         })
-    ChatLog(src=src, dst=dst, content=msg).save()
-    return JsonResponse({
-        'code': 200,
-        'msg': 'ok',
-        'data': {}
-    })
-
+    if (relation := Relation.objects.filter(src=src, dst=dst)):
+        if relation.status == "friend":
+            ChatLog(src=src, dst=dst, content=msg).save()
+            return JsonResponse({
+                'code': 200,
+                'msg': 'ok',
+                'data': {'logs': log_list}
+            })
+    else:
+        return JsonResponse({
+            'code': 403,
+            'msg': 'You are not friends yet',
+            'data': {}
+        })
 @csrf_exempt
 def get_log(request):
     if request.method != 'GET':
@@ -124,12 +131,20 @@ def get_log(request):
             'msg': 'User does not exist',
             'data': {}
         })
-    log1 = ChatLog.objects.filter(src=src, dst=dst, id__gt=id)
-    log2 = ChatLog.objects.filter(src=dst, dst=src, id__gt=id)
-    logs = log1 | log2
-    log_list = [ {'id':i.pk, 'src':i.src.username, 'dst':i.dst.username, 'msg':i.content} for i in logs ]
-    return JsonResponse({
-        'code': 200,
-        'msg': 'ok',
-        'data': {'logs': log_list}
-    })
+    if (relation := Relation.objects.filter(src=src, dst=dst)):
+        if relation.status == "friend":
+            log1 = ChatLog.objects.filter(src=src, dst=dst, id__gt=id)
+            log2 = ChatLog.objects.filter(src=dst, dst=src, id__gt=id)
+            logs = log1 | log2
+            log_list = [ {'id':i.pk, 'src':i.src.username, 'dst':i.dst.username, 'msg':i.content} for i in logs ]
+            return JsonResponse({
+                'code': 200,
+                'msg': 'ok',
+                'data': {'logs': log_list}
+            })
+    else:
+        return JsonResponse({
+            'code': 403,
+            'msg': 'You are not friends yet',
+            'data': {}
+        })

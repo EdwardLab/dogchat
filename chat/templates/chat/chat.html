@@ -36,13 +36,23 @@
             margin-right: auto;
             width: auto;
         }
-    
+        
+        .prompt {
+            text-align: center;
+            margin-right: auto;
+            width: auto;
+        }
+
         .src p {
             background-color: #98E165;
         }
 
         .dst p {
             background-color: #FFFFFF;
+        }
+
+        .prompt p {
+            background-color: #DADADA;
         }
 
         .logs {
@@ -81,7 +91,7 @@
     </form>
     </div>
     <script>
-        var ws=new WebSocket("ws://192.168.0.104:8000/ws/chat/");
+        var ws=new WebSocket("ws://127.0.0.1:8000/ws/chat/");
         ws.onopen = function(){
             ws.send('{"token":"{{ token }}", "dst_name":"{{ dst }}"}');
         }
@@ -90,14 +100,22 @@
             if(data.src === "{{ src }}"){
                 $('.content').append('<div class="src"><p>'+data.msg+'</p></div>')
             }else{
-                $('.content').append('<div class="dst"><p>'+data.msg+'</p></div>')
+                if(data.src === "dogchat"){
+                    $('.content').append('<div class="prompt"><p>'+data.msg+'</p></div>')
+                    if(data.msg === "You are not friends yet"){
+                        $('.userinput').attr('disabled', 'true')
+                        $('#submit').attr('disabled', 'true')
+                    }
+                }else{
+                    $('.content').append('<div class="dst"><p>'+data.msg+'</p></div>')
+                }
             }
             window.scrollTo(0,document.body.scrollHeight);
         }
     </script>
     <script>
         $('#submit').click(function(){
-            $.post('http://192.168.0.104:8000/api/send/',
+            $.post('http://127.0.0.1:8000/api/send/',
                 {
                     'token': '{{ token }}',
                     'dst_name': '{{ dst }}',
