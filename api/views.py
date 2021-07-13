@@ -148,3 +148,34 @@ def get_log(request):
             'msg': 'You are not friends yet',
             'data': {}
         })
+
+@csrf_exempt
+def getfriends(request):
+    if request.method != 'GET':
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Wrong request method',
+            'data': {}
+        })
+    try:
+        token = request.GET['token']
+    except KeyError:
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Missing parameters',
+            'data':{}
+            })
+    try:
+        src = User.objects.get(token=token)
+    except User.DoesNotExist:
+        return JsonResponse({
+            'code': 403,
+            'msg': 'Incorrect token',
+            'data': {}
+        })
+    lists = [ i.dst.username for i in Relation.objects.filter(src=src) ]
+    return JsonResponse({
+            'code': 200,
+            'msg': 'ok',
+            'data': {'friends':lists}
+        })
