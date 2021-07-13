@@ -20,8 +20,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         src = await sync_to_async(User.objects.get)(token=data['token'])
         dst=await sync_to_async(User.objects.get)(username=data['dst_name'])
         if (relation := await sync_to_async(Relation.objects.filter)(src=src, dst=dst)):
-            print(111)
-            if relation.status == "friend":
+            if relation[0].status == "friend":
                 flag = 1
         else:
             await self.send(text_data=json.dumps({
