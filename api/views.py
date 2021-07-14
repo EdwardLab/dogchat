@@ -84,12 +84,12 @@ def send(request):
             'data': {}
         })
     if (relation := Relation.objects.filter(src=src, dst=dst)):
-        if relation.status == "friend":
+        if relation[0].status == "friend":
             ChatLog(src=src, dst=dst, content=msg).save()
             return JsonResponse({
                 'code': 200,
                 'msg': 'ok',
-                'data': {'logs': log_list}
+                'data': {}
             })
     else:
         return JsonResponse({
@@ -132,7 +132,7 @@ def get_log(request):
             'data': {}
         })
     if (relation := Relation.objects.filter(src=src, dst=dst)):
-        if relation.status == "friend":
+        if relation[0].status == "friend":
             log1 = ChatLog.objects.filter(src=src, dst=dst, id__gt=id)
             log2 = ChatLog.objects.filter(src=dst, dst=src, id__gt=id)
             logs = log1 | log2
