@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
 
@@ -59,3 +59,14 @@ def logout(request):
         return HttpResponseRedirect(reverse('users:login'))
     else:
         return HttpResponseRedirect(reverse('users:login'))
+
+def search(request):
+    if request.method == 'GET':
+        key = request.GET.get('name')
+        if key == None:
+            key = ''
+        result = User.objects.filter(username__icontains=key)
+        return render(request, 'users/search.html', {
+            'req': key,
+            'result':result
+        })

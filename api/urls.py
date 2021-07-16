@@ -12,4 +12,5 @@ urlpatterns = [
     path('getrequests/', views.getrequests, name="getrequests"),
     path('allowrequest/', views.allowrequest, name="allowrequest"),
     path('denyrequest/', views.denyrequest, name="denyrequest"),
+    path('addfriend/', views.addfriend, name="addfriend"),
 ]
