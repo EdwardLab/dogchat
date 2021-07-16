@@ -1,5 +1,3 @@
-import secrets
-
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.hashers import check_password
@@ -20,7 +18,7 @@ def register(request):
             return render(request, 'users/register.html', {
                 'err_msg':'User already exists',
             })
-        user = User(username=username, password=password, token=secrets.token_hex(16))
+        user = User(username=username, password=password)
         user.save()
         return HttpResponseRedirect(reverse('users:login'))
     else:

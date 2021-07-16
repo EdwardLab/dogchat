@@ -12,6 +12,7 @@ class User(models.Model):
 
     def save(self, *args, **kwargs):
         self.password = make_password(self.password, None, 'pbkdf2_sha256')
+        self.token = secrets.token_hex(16)
         super(User, self).save(*args, **kwargs)
 
     def __str__(self):
