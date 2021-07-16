@@ -325,3 +325,49 @@ def denyrequest(request):
             'msg': 'ok',
             'data': {}
         })
+
+@csrf_exempt
+def addfriend(request):
+    if request.method != 'POST':
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Wrong request method',
+            'data': {}
+        })
+    try:
+        token = request.POST['token']
+        dst_name = request.POST['dst_name']
+    except KeyError:
+        return JsonResponse({
+            'code': 400,
+            'msg': 'Missing parameters',
+            'data':{}
+            })
+    try:
+        src = User.objects.get(token=token)
+    except User.DoesNotExist:
+        return JsonResponse({
+            'code': 403,
+            'msg': 'Incorrect token',
+            'data': {}
+        })
+    try:
+        dst = User.objects.get(username=dst_name)
+    except User.DoesNotExist:
+        return JsonResponse({
+            'code': 404,
+            'msg': 'The Requests does not exist',
+            'data': {}
+        })
+    if Relation.objects.filter(src=src, dst=dst):
+        return JsonResponse({
+            'code': 417,
+            'msg': 'Relation already exists',
+            'data': {}
+        })
+    Relation(src=src, dst=dst, status='request').save()
+    return JsonResponse({
+            'code': 200,
+            'msg': 'ok',
+            'data': {}
+        })
