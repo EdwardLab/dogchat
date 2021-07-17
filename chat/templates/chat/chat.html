@@ -91,7 +91,7 @@
     </form>
     </div>
     <script>
-        var ws=new WebSocket("ws://127.0.0.1:8000/ws/chat/");
+        var ws=new WebSocket("ws://"+window.location.host+"/ws/chat/");
         ws.onopen = function(){
             ws.send('{"token":"{{ token }}", "dst_name":"{{ dst }}"}');
         }
@@ -115,7 +115,7 @@
     </script>
     <script>
         $('#submit').click(function(){
-            $.post('http://127.0.0.1:8000/api/send/',
+            $.post('{% url 'api:send' %}',
                 {
                     'token': '{{ token }}',
                     'dst_name': '{{ dst }}',
