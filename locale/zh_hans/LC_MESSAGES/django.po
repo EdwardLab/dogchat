@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-19 03:45+0800\n"
+"POT-Creation-Date: 2021-07-19 03:58+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,6 +71,10 @@ msgstr "再次输入密码"
 msgid "Already have an account? <a href=\"%(the_url)s\">Log in</a> now!"
 msgstr "已经拥有一个账号? 现在<a href=\"%(the_url)s\">登录</a>!"
 
+#: users/templates/users/register.html:58
+msgid "Password input is inconsistent"
+msgstr "密码输入不一致"
+
 #: users/templates/users/search.html:22
 msgid "User search"
 msgstr "用户搜索"
@@ -91,6 +95,6 @@ msgstr "没有输入用户名或密码"
 msgid "User already exists"
 msgstr "用户已存在"
 
-#: users/views.py:56
+#: users/views.py:47 users/views.py:56
 msgid "wrong user name or password"
 msgstr "用户名或密码错误"
