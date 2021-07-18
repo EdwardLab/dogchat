@@ -1,40 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dogchat - Friends</title>
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <style>
-        a, a:hover {
-            color: cornflowerblue;
-            text-decoration: none;
-        }
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}Dogchat - Friends{% endblock title %}
+{% block style %}
+<style>
+    a, a:hover {
+        color: cornflowerblue;
+        text-decoration: none;
+    }
 
-        body {
-            margin: 5px 5px;
-        }
+    body {
+        margin: 5px 5px;
+    }
 
-        h1 {
-            font-size: 20px;
-            margin-top: 5px;
-        }
-    </style>
-</head>
-<body>
-    <form method="GET" action="{% url 'users:search' %}">
-        <div class="form-row">
-            <input class="form-control col-8 col-md-2" name='name' id='name' type='text' value="{{ req }}">
-            <button type='submit' class="btn btn-outline-primary">Search</button>
-        </div>
-    </form>
-    <h1>Search Result</h1>
-    <ul>
-        {% for user in result %}
-        <li><a href="#">{{ user.username }}</a></li>
-        {% endfor %}
-    <ul>
-</body>
-</html>
+    .result_t {
+        font-size: 20px;
+        margin-top: 5px;
+    }
+</style>
+{% endblock style %}
+{% block content %}
+<h1 style="text-align: center; margin: 0 auto;">{% translate "User search" %}</h1>
+<form method="GET" action="{% url 'users:search' %}">
+    <div class="form-row">
+        <input class="form-control col-8 col-md-2" name='name' id='name' type='text' value="{{ req }}">
+        <button type='submit' class="btn btn-outline-primary">{% translate "Search" %}</button>
+    </div>
+</form>
+<h1 class="result_t">{% translate "Search Result" %}</h1>
+<ul>
+    {% for user in result %}
+    <li><a href="#">{{ user.username }}</a></li>
+    {% endfor %}
+<ul>
+{% endblock content %}

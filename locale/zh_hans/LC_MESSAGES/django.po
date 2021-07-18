@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-19 03:45+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: templates/base.html:23
+msgid "Home"
+msgstr "主页"
+
+#: templates/base.html:24 users/templates/users/login.html:43
+msgid "Login"
+msgstr "登录"
+
+#: templates/base.html:25 users/templates/users/register.html:47
+msgid "Register"
+msgstr "注册"
+
+#: users/templates/users/login.html:27
+msgid "User login"
+msgstr "用户登录"
+
+#: users/templates/users/login.html:38 users/templates/users/register.html:40
+msgid "Username"
+msgstr "用户名"
+
+#: users/templates/users/login.html:39 users/templates/users/register.html:41
+msgid "Enter username"
+msgstr "输入用户名"
+
+#: users/templates/users/login.html:40 users/templates/users/register.html:42
+msgid "Password"
+msgstr "密码"
+
+#: users/templates/users/login.html:41 users/templates/users/register.html:43
+msgid "Enter password"
+msgstr "输入密码"
+
+#: users/templates/users/login.html:46
+#, python-format
+msgid "No account? <a href=\"%(the_url)s\">Sign up</a> now!"
+msgstr "没有账号? 现在<a href=\"%(the_url)s\">注册</a>!"
+
+#: users/templates/users/register.html:31
+msgid "User register"
+msgstr "用户注册"
+
+#: users/templates/users/register.html:44
+msgid "Confirm password"
+msgstr "验证密码"
+
+#: users/templates/users/register.html:45
+msgid "Enter password again"
+msgstr "再次输入密码"
+
+#: users/templates/users/register.html:50
+#, python-format
+msgid "Already have an account? <a href=\"%(the_url)s\">Log in</a> now!"
+msgstr "已经拥有一个账号? 现在<a href=\"%(the_url)s\">登录</a>!"
+
+#: users/templates/users/search.html:22
+msgid "User search"
+msgstr "用户搜索"
+
+#: users/templates/users/search.html:26
+msgid "Search"
+msgstr "搜索"
+
+#: users/templates/users/search.html:29
+msgid "Search Result"
+msgstr "搜索结果"
+
+#: users/views.py:19 users/views.py:41
+msgid "No username or password entered"
+msgstr "没有输入用户名或密码"
+
+#: users/views.py:23
+msgid "User already exists"
+msgstr "用户已存在"
+
+#: users/views.py:56
+msgid "wrong user name or password"
+msgstr "用户名或密码错误"

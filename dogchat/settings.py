@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'dogchat.urls'
@@ -82,8 +84,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dogchat',
         'USER': 'dogchat',
-        'HOST': '218.89.171.135',
-        'PORT': '18284',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
         'PASSWORD': '@dogchat?963_default!321_?password@!'
     }
 }
@@ -121,6 +123,14 @@ USE_L10N = True
 
 USE_TZ = False
 
+LANGUAGES = (
+    ('zh-hans', '简体中文'),
+    ('en-us', 'English'),
+)
+ 
+LOCALE_PATHS = (
+    BASE_DIR / 'locale/',
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

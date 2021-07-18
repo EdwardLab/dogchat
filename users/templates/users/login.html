@@ -1,64 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Dogchat - Login</title>
-        <link href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <style>
-            .operation {
-                text-align: center;
-            }
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}Dogchat - Login{% endblock title %}
+{% block style %}
+<style>
+    .operation {
+        text-align: center;
+    }
 
-            form small {
-                display: block;
-                text-align: right;
-                color: gray;
-            }
+    form small {
+        display: block;
+        text-align: right;
+        color: gray;
+    }
 
-            form label {
-                margin: 0 auto;
-            }
+    form label {
+        margin: 0 auto;
+    }
 
-            form {
-                padding: 5px;
-            }
-        </style>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Dogchat</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" href="{% url 'users:login' %}">Login</a>
-                    <a class="nav-link" href="{% url 'users:register' %}">Register</a>
-                </div>
-            </div>
-        </nav>
-        <h1 style="text-align: center; margin: 0 auto;">User login</h1>
-        <form action="{% url 'users:login' %}" method="POST">
-            {% csrf_token %}
-            {% if err_msg %}
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>{{ err_msg }}</strong><br>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            {% endif %}
-            <label for="username">Username</label><br>
-            <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" required><br>
-            <label for="password">Password</label><br>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required><br>
-            <div class="operation">
-                <button type="submit" class="form-control btn btn-primary col-6">Login</button>
-            </div>
-            <small>No account? <a href="{% url 'users:register' %}">Sign up</a> now!</small>
-        </form>
-    </body>
-</html>
+    form {
+        padding: 5px;
+    }
+</style>
+{% endblock style %}
+{% block login %}active{% endblock login %}
+{% block content %}
+<h1 style="text-align: center; margin: 0 auto;">{% translate "User login" %}</h1>
+<form action="{% url 'users:login' %}" method="POST">
+    {% csrf_token %}
+    {% if err_msg %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>{{ err_msg }}</strong><br>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    <label for="username">{% translate "Username" %}</label><br>
+    <input type="text" name="username" class="form-control" id="username" placeholder="{% translate "Enter username" %}" required><br>
+    <label for="password">{% translate "Password" %}</label><br>
+    <input type="password" name="password" class="form-control" id="password" placeholder="{% translate "Enter password" %}" required><br>
+    <div class="operation">
+        <button type="submit" class="form-control btn btn-primary col-6">{% translate "Login" %}</button>
+    </div>
+    {% url 'users:register' as the_url %}
+    <small>{% blocktranslate %}No account? <a href="{{ the_url }}">Sign up</a> now!{% endblocktranslate %}</small>
+</form>
+{% endblock content %}
+

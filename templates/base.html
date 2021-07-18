@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load i18n %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}{% endblock title %}</title>
+        <link href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        {% block style %}
+        {% endblock style %}
+    </head>
+    <body>
+        {% language lang %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Dogchat</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link {% block home %}{% endblock home %}" href="{% url 'homepage:homepage' %}">{% translate 'Home' %}</a>
+                    <a class="nav-link {% block login %}{% endblock login %}" href="{% url 'users:login' %}">{% translate 'Login' %}</a>
+                    <a class="nav-link {% block register%}{% endblock register %}" href="{% url 'users:register' %}">{% translate 'Register' %}</a>
+                </div>
+            </div>
+        </nav>
+        {% block content %}
+        {% endblock content %}
+        {% endlanguage %}
+    </body>
+</html>
