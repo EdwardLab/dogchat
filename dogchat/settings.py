@@ -82,8 +82,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dogchat',
         'USER': 'dogchat',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'HOST': '218.89.171.135',
+        'PORT': '18284',
         'PASSWORD': '@dogchat?963_default!321_?password@!'
     }
 }
