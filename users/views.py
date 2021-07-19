@@ -26,7 +26,10 @@ def register(request):
         user.save()
         return HttpResponseRedirect(reverse('users:login'))
     else:
-        return render(request, 'users/register.html', {'lang':LANG})
+        return render(request, 'users/register.html', {
+            'lang':LANG,
+            'is_login':request.session.get('is_login')
+            })
 
 def login(request):
     LANG = translation.get_language().replace('-', '_')
@@ -57,7 +60,10 @@ def login(request):
         })
         
     else:
-        return render(request, 'users/login.html', {'lang':LANG})
+        return render(request, 'users/login.html', {
+            'lang':LANG,
+            'is_login':request.session.get('is_login')
+        })
 
 def logout(request):
     if request.session.get('is_login'):
@@ -77,5 +83,6 @@ def search(request):
         return render(request, 'users/search.html', {
             'req': key,
             'result':result,
-            'lang':LANG
+            'lang':LANG,
+            'is_login':request.session.get('is_login')
         })

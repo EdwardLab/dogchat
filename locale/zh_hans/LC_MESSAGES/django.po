@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-19 13:02+0800\n"
+"POT-Creation-Date: 2021-07-19 13:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,20 +17,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: chat/templates/chat/friends.html:21
-msgid "Friends Request"
+#: chat/templates/chat/friends.html:22
+msgid "Friend Request"
 msgstr "好友请求"
 
-#: chat/templates/chat/friends.html:27
+#: chat/templates/chat/friends.html:28
 msgid "deny"
 msgstr "拒绝"
 
-#: chat/templates/chat/friends.html:28
+#: chat/templates/chat/friends.html:29
 msgid "allow"
 msgstr "允许"
 
-#: chat/templates/chat/friends.html:34
-msgid "Friends List"
+#: chat/templates/chat/friends.html:35 templates/base.html:27
+msgid "Friend List"
 msgstr "好友列表"
 
 #: homepage/templates/homepage/home.html:7
@@ -73,6 +73,10 @@ msgstr "登录"
 msgid "Register"
 msgstr "注册"
 
+#: templates/base.html:26 users/templates/users/search.html:23
+msgid "User search"
+msgstr "用户搜索"
+
 #: users/templates/users/login.html:27
 msgid "User login"
 msgstr "用户登录"
@@ -114,15 +118,11 @@ msgstr "再次输入密码"
 msgid "Password input is inconsistent"
 msgstr "密码输入不一致"
 
-#: users/templates/users/search.html:22
-msgid "User search"
-msgstr "用户搜索"
-
-#: users/templates/users/search.html:26
+#: users/templates/users/search.html:27
 msgid "Search"
 msgstr "搜索"
 
-#: users/templates/users/search.html:29
+#: users/templates/users/search.html:30
 msgid "Search Result"
 msgstr "搜索结果"
 

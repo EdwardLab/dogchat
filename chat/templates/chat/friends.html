@@ -14,11 +14,12 @@
     }
 </style>
 {% endblock style %}
+{% block friendlist %}active{% endblock friendlist %}
 {% block content %}
 <div class="card">
     {% if requests %}
     <div class="card-header">
-        {% translate "Friends Request" %}
+        {% translate "Friend Request" %}
     </div>
     <ul class="requests list-group list-group-flush">
         {% for request in requests %}
@@ -31,7 +32,7 @@
     </ul>
     {% endif %}
     <div class="card-header">
-        {% translate "Friends List" %}
+        {% translate "Friend List" %}
     </div>
     <ul class="friends list-group list-group-flush">
         {% for friend in friends %}

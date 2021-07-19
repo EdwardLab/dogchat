@@ -18,6 +18,7 @@
     }
 </style>
 {% endblock style %}
+{% block usersearch %}active{% endblock usersearch %}
 {% block content %}
 <h1 style="text-align: center; margin: 0 auto;">{% translate "User search" %}</h1>
 <form method="GET" action="{% url 'users:search' %}">

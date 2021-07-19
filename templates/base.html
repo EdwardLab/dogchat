@@ -21,8 +21,14 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link {% block home %}{% endblock home %}" href="{% url 'homepage:homepage' %}">{% translate 'Home' %}</a>
+                    {% if not is_login %}
                     <a class="nav-link {% block login %}{% endblock login %}" href="{% url 'users:login' %}">{% translate 'Login' %}</a>
-                    <a class="nav-link {% block register%}{% endblock register %}" href="{% url 'users:register' %}">{% translate 'Register' %}</a>
+                    <a class="nav-link {% block register %}{% endblock register %}" href="{% url 'users:register' %}">{% translate 'Register' %}</a>
+                    {% endif %}
+                    {% if is_login %}
+                    <a class="nav-link {% block usersearch %}{% endblock usersearch %}" href="{% url 'users:search' %}">{% translate 'User search' %}</a>
+                    <a class="nav-link {% block friendlist %}{% endblock friendlist %}" href="{% url 'chat:friends' %}">{% translate 'Friend List' %}</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
