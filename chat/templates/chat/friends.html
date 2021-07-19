@@ -1,65 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dogchat - Friends</title>
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <style>
-        a, a:hover {
-            color: black;
-            text-decoration: none;
-        }
-        
-        button {
-            float: right;
-            margin: 0 1px;
-        }
-    </style>
-</head>
-<body>
-    <div class="card">
-        {% if requests %}
-        <div class="card-header">
-            Friend Request
-        </div>
-        <ul class="requests list-group list-group-flush">
-            {% for request in requests %}
-            <li class="list-group-item">
-                {{ request.src.username }}
-                <button type="button" class="deny btn btn-danger" onclick="denyreq('{{ request.pk }}', this);">deny</button>
-                <button type="button" class="allow btn btn-success" onclick="allowreq('{{ request.pk }}', this);">allow</button>
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        <div class="card-header">
-            Friends List
-        </div>
-        <ul class="friends list-group list-group-flush">
-            {% for friend in friends %}
-            <li class="list-group-item"><a href="{% url 'chat:showlog' friend.dst.username %}">{{ friend.dst.username }}</a></li>
-            {% endfor %}
-        </ul>
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}Dogchat - Friends{% endblock title %}
+{% block style %}
+<style>
+    a, a:hover {
+        color: black;
+        text-decoration: none;
+    }
+    
+    button {
+        float: right;
+        margin: 0 1px;
+    }
+</style>
+{% endblock style %}
+{% block content %}
+<div class="card">
+    {% if requests %}
+    <div class="card-header">
+        {% translate "Friends Request" %}
     </div>
-    <script>
-        function reload(){
-            if($('.requests').children().length === 0){
-                window.location.reload()
-            }
+    <ul class="requests list-group list-group-flush">
+        {% for request in requests %}
+        <li class="list-group-item">
+            {{ request.src.username }}
+            <button type="button" class="deny btn btn-danger" onclick="denyreq('{{ request.pk }}', this);">{% translate "deny" %}</button>
+            <button type="button" class="allow btn btn-success" onclick="allowreq('{{ request.pk }}', this);">{% translate "allow" %}</button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="card-header">
+        {% translate "Friends List" %}
+    </div>
+    <ul class="friends list-group list-group-flush">
+        {% for friend in friends %}
+        <li class="list-group-item"><a href="{% url 'chat:showlog' friend.dst.username %}">{{ friend.dst.username }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+<script>
+    function reload(){
+        if($('.requests').children().length === 0){
+            window.location.reload()
         }
-        function allowreq(id, e){
-            $.post('{% url "api:allowrequest" %}', {token:'{{ token }}', id:id});
-            $(e).parent().remove();
-            setTimeout(reload, 1000);
-        }
-        function denyreq(id, e){
-            $.post('{% url "api:denyrequest" %}', {token:'{{ token }}', id:id});
-            $(e).parent().remove();
-            setTimeout(reload, 1000);
-        }
-    </script>
-</body>
-</html>
+    }
+    function allowreq(id, e){
+        $.post('{% url "api:allowrequest" %}', {token:'{{ token }}', id:id});
+        $(e).parent().remove();
+        setTimeout(reload, 1000);
+    }
+    function denyreq(id, e){
+        $.post('{% url "api:denyrequest" %}', {token:'{{ token }}', id:id});
+        $(e).parent().remove();
+        setTimeout(reload, 1000);
+    }
+</script>
+{% endblock content %}

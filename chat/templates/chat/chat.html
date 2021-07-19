@@ -1,129 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dogchat - ChatLogs</title>
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            background-color: #F5F5F5;
-        }
-        .dstName {
-            font-size: 20px;
-            padding: 10px;
-            margin: 0 auto 5px;
-            border-bottom: 1px solid lightgray;
-        }
-        p {
-            display: inline-block;
-            margin: 3px 0px;
-            padding: 3px;
-            border-radius: 5px;
-            text-align: left;
-        }
-        
-        .src {
-            text-align: right;
-            margin-left: auto;
-            width: auto;
-        }
+{% extends 'base.html' %}
+{% block title %}Dogchat - ChatLogs{% endblock title %}
+{% block style %}
+<style>
+    body {
+        background-color: #F5F5F5;
+    }
+    .dstName {
+        font-size: 20px;
+        padding: 10px;
+        margin: 0 auto 5px;
+        border-bottom: 1px solid lightgray;
+    }
+    p {
+        display: inline-block;
+        margin: 3px 0px;
+        padding: 3px;
+        border-radius: 5px;
+        text-align: left;
+    }
+    
+    .src {
+        text-align: right;
+        margin-left: auto;
+        width: auto;
+    }
 
-        .dst {
-            text-align: left;
-            margin-right: auto;
-            width: auto;
-        }
-        
-        .prompt {
-            text-align: center;
-            margin-right: auto;
-            width: auto;
-        }
+    .dst {
+        text-align: left;
+        margin-right: auto;
+        width: auto;
+    }
+    
+    .prompt {
+        text-align: center;
+        margin-right: auto;
+        width: auto;
+    }
 
-        .src p {
-            background-color: #98E165;
-        }
+    .src p {
+        background-color: #98E165;
+    }
 
-        .dst p {
-            background-color: #FFFFFF;
-        }
+    .dst p {
+        background-color: #FFFFFF;
+    }
 
-        .prompt p {
-            background-color: #DADADA;
-        }
+    .prompt p {
+        background-color: #DADADA;
+    }
 
+    .logs {
+        margin: 0 auto;
+        padding: 15px;
+        width: 35%;
+    }
+
+    @media all and (orientation : portrait){
         .logs {
-            margin: 0 auto;
-            padding: 15px;
-            width: 35%;
+            width: auto;
         }
+    }
 
-        @media all and (orientation : portrait){
-            .logs {
-                width: auto;
-            }
-        }
-
-        .userinput {
-            resize:none;
-            width: 100%;
-            height: 10ch;
-        }
-    </style>
-</head>
-<body>
-    <div class="logs">
-    <div>
-        <h1 class="dstName">{{ dst }}</h1>
+    .userinput {
+        resize:none;
+        width: 100%;
+        height: 10ch;
+    }
+</style>
+{% endblock style %}
+{% block content %}
+<div class="logs">
+<div>
+    <h1 class="dstName">{{ dst }}</h1>
+</div>
+<div class="content">
+</div>
+<form>
+    <div style="margin-bottom: 5px;">
+        <textarea class="userinput form-control" name="msg"></textarea>
     </div>
-    <div class="content">
+    <div style="text-align: right;">
+        <input id="submit" type="button" class="btn btn-primary" value="send">
     </div>
-    <form>
-        <div style="margin-bottom: 5px;">
-            <textarea class="userinput form-control" name="msg"></textarea>
-        </div>
-        <div style="text-align: right;">
-            <input id="submit" type="button" class="btn btn-primary" value="send">
-        </div>
-    </form>
-    </div>
-    <script>
-        var ws=new WebSocket("ws://"+window.location.host+"/ws/chat/");
-        ws.onopen = function(){
-            ws.send('{"token":"{{ token }}", "dst_name":"{{ dst }}"}');
-        }
-        ws.onmessage = function(e){
-            data = JSON.parse(e.data);
-            if(data.src === "{{ src }}"){
-                $('.content').append('<div class="src"><p>'+data.msg+'</p></div>')
+</form>
+</div>
+<script>
+    var ws=new WebSocket("ws://"+window.location.host+"/ws/chat/");
+    ws.onopen = function(){
+        ws.send('{"token":"{{ token }}", "dst_name":"{{ dst }}"}');
+    }
+    ws.onmessage = function(e){
+        data = JSON.parse(e.data);
+        if(data.src === "{{ src }}"){
+            $('.content').append('<div class="src"><p>'+data.msg+'</p></div>')
+        }else{
+            if(data.src === "dogchat"){
+                $('.content').append('<div class="prompt"><p>'+data.msg+'</p></div>')
+                if(data.msg === "You are not friends yet"){
+                    $('.userinput').attr('disabled', 'true')
+                    $('#submit').attr('disabled', 'true')
+                }
             }else{
-                if(data.src === "dogchat"){
-                    $('.content').append('<div class="prompt"><p>'+data.msg+'</p></div>')
-                    if(data.msg === "You are not friends yet"){
-                        $('.userinput').attr('disabled', 'true')
-                        $('#submit').attr('disabled', 'true')
-                    }
-                }else{
-                    $('.content').append('<div class="dst"><p>'+data.msg+'</p></div>')
-                }
+                $('.content').append('<div class="dst"><p>'+data.msg+'</p></div>')
             }
-            window.scrollTo(0,document.body.scrollHeight);
         }
-    </script>
-    <script>
-        $('#submit').click(function(){
-            $.post('{% url 'api:send' %}',
-                {
-                    'token': '{{ token }}',
-                    'dst_name': '{{ dst }}',
-                    'msg': $('.userinput').val()
-                }
-            );
-            $('.userinput').val('');
-        })
-    </script>
-</body>
-</html>
+        window.scrollTo(0,document.body.scrollHeight);
+    }
+</script>
+<script>
+    $('#submit').click(function(){
+        $.post('{% url 'api:send' %}',
+            {
+                'token': '{{ token }}',
+                'dst_name': '{{ dst }}',
+                'msg': $('.userinput').val()
+            }
+        );
+        $('.userinput').val('');
+    })
+</script>
+{% endblock content %}

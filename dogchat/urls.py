@@ -19,11 +19,11 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('chat/', include('chat.urls')),
     path('api/', include('api.urls')),
-    path('', include('homepage.urls')),
 ]
 
 urlpatterns += i18n_patterns(
     path('users/', include('users.urls')),
+    path('chat/', include('chat.urls')),
+    path('', include('homepage.urls')),
 )
