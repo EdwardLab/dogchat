@@ -85,7 +85,7 @@
 </form>
 </div>
 <script>
-    var ws=new WebSocket("ws://"+window.location.host+"/ws/chat/");
+    var ws=new WebSocket("wss://"+window.location.host+"/ws/chat/");
     ws.onopen = function(){
         ws.send('{"token":"{{ token }}", "dst_name":"{{ dst }}"}');
     }
