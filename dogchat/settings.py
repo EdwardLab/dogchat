@@ -55,6 +55,8 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
 ]
 
+CSRF_COOKIE_HTTPONLY = True
+
 ROOT_URLCONF = 'dogchat.urls'
 
 TEMPLATES = [
