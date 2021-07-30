@@ -30,7 +30,7 @@
 <h1 class="result_t">{% translate "Search Result" %}</h1>
 <ul>
     {% for user in result %}
-    <li><a href="#">{{ user.username }}</a></li>
+    <li><a href="{% url 'users:info' user.username %}">{{ user.username }}</a></li>
     {% endfor %}
 <ul>
 {% endblock content %}

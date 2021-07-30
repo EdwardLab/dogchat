@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 from django.utils import translation
 
 from .models import User
+from chat.models import Relation
 
 # Create your views here.
 
@@ -86,3 +87,22 @@ def search(request):
             'lang':LANG,
             'is_login':request.session.get('is_login')
         })
+
+def info(request, name):
+    LANG = translation.get_language().replace('-', '_')
+    translation.activate(LANG)
+    if not request.session.get('is_login'):
+        return HttpResponseRedirect(reverse('users:login'))
+    dst = get_object_or_404(User, username=name)
+    src = get_object_or_404(User, username=request.session['username'])
+    if Relation.objects.filter(src=src, dst=dst, status='friend'):
+        is_friend = 1
+    else:
+        is_friend = 0
+    return render(request, 'users/info.html', {
+        'lang':LANG,
+        'is_login':request.session.get('is_login'),
+        'dst':dst,
+        'is_friend':is_friend,
+        'token':src.token
+    })

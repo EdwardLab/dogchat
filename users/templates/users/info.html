@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}Dogchat - User Info{% endblock title %}
+{% block style %}
+<style>
+h1 {
+    margin: 0;
+}
+</style>
+{% endblock style %}
+{% block content %}
+<h1>{{ dst.username }}</h1>
+<small>uid: {{ dst.pk }}</small><br>
+{% if is_friend %}
+<a href="{% url 'chat:showlog' dst.username %}">
+    <button class="btn btn-success">{% translate 'send message' %}</button>
+</a>
+{% else %}
+<button class="btn btn-primary" onclick="addfriend('{{ dst.username  }}', this)">{% translate 'add friend' %}</button>
+{% endif %}
+
+<script>
+    function addfriend(dst, e){
+        $.post("{% url 'api:addfriend' %}",{
+            'dst_name':dst,
+            'token':'{{ token }}'
+        });
+        $(e).attr('disabled', 'true');
+        alert('friend request sent');
+    }
+</script>
+{% endblock content %}
