@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-19 13:17+0800\n"
+"POT-Creation-Date: 2021-07-31 15:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr "拒绝"
 msgid "allow"
 msgstr "允许"
 
-#: chat/templates/chat/friends.html:35 templates/base.html:27
+#: chat/templates/chat/friends.html:35 templates/base.html:30
 msgid "Friend List"
 msgstr "好友列表"
 
@@ -52,7 +52,7 @@ msgid "Register Now!"
 msgstr "现在注册!"
 
 #: homepage/templates/homepage/home.html:15
-#: users/templates/users/register.html:50
+#: users/templates/users/register.html:52
 #, python-format
 msgid "Already have an account? <a href=\"%(the_url)s\">Log in</a> now!"
 msgstr "已经拥有一个账号? 现在<a href=\"%(the_url)s\">登录</a>!"
@@ -65,17 +65,29 @@ msgstr "DogChat，一个开源、免费、轻量级的聊天服务器和客户�
 msgid "Home"
 msgstr "主页"
 
-#: templates/base.html:24 users/templates/users/login.html:43
+#: templates/base.html:25 users/templates/users/login.html:43
 msgid "Login"
 msgstr "登录"
 
-#: templates/base.html:25 users/templates/users/register.html:47
+#: templates/base.html:26 users/templates/users/register.html:49
 msgid "Register"
 msgstr "注册"
 
-#: templates/base.html:26 users/templates/users/search.html:23
+#: templates/base.html:29 users/templates/users/search.html:23
 msgid "User search"
 msgstr "用户搜索"
+
+#: users/templates/users/info.html:16
+msgid "send message"
+msgstr "发消息"
+
+#: users/templates/users/info.html:19
+msgid "add friend"
+msgstr "加好友"
+
+#: users/templates/users/info.html:29
+msgid "friend request sent"
+msgstr "好友请求已发送"
 
 #: users/templates/users/login.html:27
 msgid "User login"
@@ -89,11 +101,11 @@ msgstr "用户名"
 msgid "Enter username"
 msgstr "输入用户名"
 
-#: users/templates/users/login.html:40 users/templates/users/register.html:42
+#: users/templates/users/login.html:40 users/templates/users/register.html:44
 msgid "Password"
 msgstr "密码"
 
-#: users/templates/users/login.html:41 users/templates/users/register.html:43
+#: users/templates/users/login.html:41 users/templates/users/register.html:45
 msgid "Enter password"
 msgstr "输入密码"
 
@@ -106,15 +118,23 @@ msgstr "没有账号? 现在<a href=\"%(the_url)s\">注册</a>!"
 msgid "User register"
 msgstr "用户注册"
 
-#: users/templates/users/register.html:44
+#: users/templates/users/register.html:42
+msgid "Email"
+msgstr "电子邮箱"
+
+#: users/templates/users/register.html:43
+msgid "Enter email"
+msgstr "输入邮箱"
+
+#: users/templates/users/register.html:46
 msgid "Confirm password"
 msgstr "验证密码"
 
-#: users/templates/users/register.html:45
+#: users/templates/users/register.html:47
 msgid "Enter password again"
 msgstr "再次输入密码"
 
-#: users/templates/users/register.html:58
+#: users/templates/users/register.html:60
 msgid "Password input is inconsistent"
 msgstr "密码输入不一致"
 
@@ -126,14 +146,49 @@ msgstr "搜索"
 msgid "Search Result"
 msgstr "搜索结果"
 
-#: users/views.py:19 users/views.py:41
-msgid "No username or password entered"
-msgstr "没有输入用户名或密码"
+#: users/templates/users/verify_email_tips.html:12
+msgid "Activate user"
+msgstr "激活用户"
 
-#: users/views.py:23
+#: users/templates/users/verify_email_tips.html:14
+msgid ""
+"Your user has been successfully registered. To use this user, please "
+"activate this user first. The activation link has been sent to your email. "
+msgstr ""
+"您的用户已经成功被注册，要使用该用户，请先激活此用户。激活链接已经发送到您的"
+"邮箱。"
+
+#: users/views.py:24
 msgid "User already exists"
 msgstr "用户已存在"
 
-#: users/views.py:47 users/views.py:56
+#: users/views.py:28
+msgid "Email already Used"
+msgstr "邮箱已经被使用"
+
+#: users/views.py:34
+msgid "Dogchat"
+msgstr ""
+
+#: users/views.py:35
+#, python-format
+msgid ""
+"Your account has been successfully registered.\n"
+"To activate your account, please visit https://www.dogchat.top%s?token=%s\n"
+"If you did not do it yourself, please ignore this email\n"
+msgstr ""
+"您的账户已经成功注册。\n"
+"要激活您的账户，请访问 https://www.dogchat.top%s?token=%s\n"
+"如果如果不是您本人操作，请无视这封邮件\n"
+
+#: users/views.py:60
+msgid "No username or password entered"
+msgstr "没有输入用户名或密码"
+
+#: users/views.py:66 users/views.py:79
 msgid "wrong user name or password"
 msgstr "用户名或密码错误"
+
+#: users/views.py:70
+msgid "This user has been disabled"
+msgstr "此用户已被禁用"

@@ -1,7 +1,10 @@
+import secrets
+
 from django.shortcuts import render, reverse, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.contrib.auth.hashers import check_password
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.hashers import make_password, check_password
 from django.utils.translation import gettext as _
+from django.core.mail import send_mail
 from django.utils import translation
 
 from .models import User
@@ -15,22 +18,34 @@ def register(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        if not username or not password:
-            return render(request, 'users/register.html', {
-                'err_msg':_('No username or password entered'),
-            })
+        email = request.POST['email']
         if User.objects.filter(username=username).exists():
             return render(request, 'users/register.html', {
                 'err_msg':_('User already exists'),
             })
-        user = User(username=username, password=password)
+        if User.objects.filter(email=email).exists():
+            return render(request, 'users/register.html', {
+                'err_msg':_('Email already Used'),
+            })
+        password = make_password(password, None, 'pbkdf2_sha256')
+        user = User(username=username, password=password, email=email, active='no')
         user.save()
-        return HttpResponseRedirect(reverse('users:login'))
+        send_mail(
+            _('Dogchat'),
+            _('Your account has been successfully registered.\nTo activate your account, please visit https://www.dogchat.top%s?token=%s\nIf you did not do it yourself, please ignore this email\n') % (reverse('users:active', args=[user.username]), user.tmp_token),
+            'Dogchat Team<dogchat@dogchat.top>',
+            [email],
+            fail_silently=False
+        )
+        return render(request, 'users/verify_email_tips.html', {
+            'lang':LANG,
+            'is_login':request.session.get('is_login')
+        })
     else:
         return render(request, 'users/register.html', {
             'lang':LANG,
             'is_login':request.session.get('is_login')
-            })
+        })
 
 def login(request):
     LANG = translation.get_language().replace('-', '_')
@@ -50,6 +65,10 @@ def login(request):
             return render(request, 'users/login.html', {
                 'err_msg':_('wrong user name or password'),
             })
+        if user.active == "no":
+            return render(request, 'users/login.html', {
+                'err_msg':_('This user has been disabled'),
+            })
         if check_password(password, user.password):
             request.session['is_login'] = True
             request.session['uid'] = user.pk
@@ -59,7 +78,7 @@ def login(request):
         return render(request, 'users/login.html', {
             'err_msg':_('wrong user name or password'),
         })
-        
+
     else:
         return render(request, 'users/login.html', {
             'lang':LANG,
@@ -106,3 +125,14 @@ def info(request, name):
         'is_friend':is_friend,
         'token':src.token
     })
+
+def active(request, name):
+    if request.method == 'GET':
+        token = request.GET.get("token")
+    user = get_object_or_404(User, username=name)
+    if user.active != "yes" and user.tmp_token == token:
+        user.active = "yes"
+        user.tmp_token = secrets.token_hex(16)
+        user.save()
+        return HttpResponse("user actived")
+    return HttpResponse("failed")

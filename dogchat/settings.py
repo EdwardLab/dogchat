@@ -141,6 +141,14 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static_root/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+# email
+EMAIL_HOST = 'smtp.exmail.qq.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'dogchat@dogchat.top'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USER_TLS = False
+DEFAULT_FROM_EMAIL = 'Dogchat Team<dogchat@dogchat.top>'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
