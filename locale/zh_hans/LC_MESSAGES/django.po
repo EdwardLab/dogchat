@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-31 15:00+0800\n"
+"POT-Creation-Date: 2021-08-01 09:36+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,10 @@ msgstr "注册"
 #: templates/base.html:29 users/templates/users/search.html:23
 msgid "User search"
 msgstr "用户搜索"
+
+#: templates/base.html:31
+msgid "Log out"
+msgstr "注销"
 
 #: users/templates/users/info.html:16
 msgid "send message"
@@ -146,11 +150,11 @@ msgstr "搜索"
 msgid "Search Result"
 msgstr "搜索结果"
 
-#: users/templates/users/verify_email_tips.html:12
+#: users/templates/users/verify_email_tips.html:13
 msgid "Activate user"
 msgstr "激活用户"
 
-#: users/templates/users/verify_email_tips.html:14
+#: users/templates/users/verify_email_tips.html:15
 msgid ""
 "Your user has been successfully registered. To use this user, please "
 "activate this user first. The activation link has been sent to your email. "

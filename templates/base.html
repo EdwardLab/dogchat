@@ -28,6 +28,7 @@
                     {% if is_login %}
                     <a class="nav-link {% block usersearch %}{% endblock usersearch %}" href="{% url 'users:search' %}">{% translate 'User search' %}</a>
                     <a class="nav-link {% block friendlist %}{% endblock friendlist %}" href="{% url 'chat:friends' %}">{% translate 'Friend List' %}</a>
+                    <a class="nav-link" href="{% url 'users:logout' %}">{% translate 'Log out' %}</a>
                     {% endif %}
                 </div>
             </div>

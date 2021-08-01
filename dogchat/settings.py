@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=aa+y5phny(!u40d14!mg_e@fsb9e4uhit=!*lv258h^@p(kcj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -145,7 +145,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 EMAIL_HOST = 'smtp.exmail.qq.com'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = 'dogchat@dogchat.top'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'UXUYvhGHXzkJuUSy'
 EMAIL_USER_TLS = False
 DEFAULT_FROM_EMAIL = 'Dogchat Team<dogchat@dogchat.top>'
 
