@@ -4,3 +4,4 @@
 .vscode/
 static_root/
 .pylintrc
+.idea/
